@@ -9,7 +9,7 @@ The first model only describes the dynamics of the so-called *regulatory units* 
 | RDQ20-SE | 1408        | :heavy_check_mark: | :heavy_check_mark: | [[2]](http://hdl.handle.net/10589/152617), [[3]](https://arxiv.org/abs/2004.07910) (herein denoted as SE-ODE) |
 | RDQ20-MF | 20          | :heavy_check_mark: | :heavy_check_mark: | [[2]](http://hdl.handle.net/10589/152617), [[3]](https://arxiv.org/abs/2004.07910) (herein denoted as MF-ODE) |
 
-*Remark:* a reduced version of the RDQ18 model, based on Artificial Neural Newtorks and built with the Machine Learning library [model-learning](https://github.com/FrancescoRegazzoni/model-learning), is available at [cardiac-activation-ann](https://github.com/FrancescoRegazzoni/cardiac-activation-ann).
+*Remark:* a reduced version of the RDQ18 model, based on Artificial Neural Networks and built with the Machine Learning library [model-learning](https://github.com/FrancescoRegazzoni/model-learning), is available at [cardiac-activation-ann](https://github.com/FrancescoRegazzoni/cardiac-activation-ann).
 
 ### Repository structure
 

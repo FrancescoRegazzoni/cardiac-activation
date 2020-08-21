@@ -1,0 +1,28 @@
+{
+    "geometry":
+    {
+        "LA" : 1.2,
+        "LM" : 1.65,
+        "LB" : 0.1,
+        "Lsmooth" : 0.1,
+        "n_RU" : 36
+    },
+    "RU_steady_state":
+    {
+        "Q0" : 3,
+        "SLQ" : 2.2,
+        "alphaQ" : 1.4,
+        "mu" : 10,
+        "gamma" : 40
+    },
+    "RU_kinetics":
+    {
+        "Kbasic" : 10,
+        "Kon" : 80,
+        "Koff" : 80
+    },
+    "upscaling" :
+    {
+        "TaMax" : 400
+    }
+}

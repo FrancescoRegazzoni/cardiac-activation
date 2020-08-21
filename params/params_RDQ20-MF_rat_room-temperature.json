@@ -1,0 +1,33 @@
+{
+    "geometry":
+    {
+        "LA" : 1.25,
+        "LM" : 1.65,
+        "LB" : 0.18,
+        "SL0" : 2.2
+    },
+    "RU_steady_state":
+    {
+        "mu" : 10,
+        "gamma" : 12,
+        "Q" : 2,
+        "Kd0" : 0.835,
+        "alphaKd" : -1.258
+    },
+    "RU_kinetics":
+    {
+        "Koff" : 120,
+        "Kbasic" : 20
+    },
+    "XB_cycling":
+    {
+        "mu0_fP" : 32.708,
+        "mu1_fP" : 0.779,
+        "r0" : 134.31,
+        "alpha" : 25.184
+    },
+    "upscaling":
+    {
+        "a_XB" : 22.894e3
+    }
+}

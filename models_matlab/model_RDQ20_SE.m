@@ -47,7 +47,6 @@ function output = model_RDQ20_SE(input, params)
         params = jsondecode(fileread(params));
     end
     n_RU     = params.geometry.n_RU;           % [-]
-    n_MH     = params.geometry.n_MH;           % [-]
     LA       = params.geometry.LA;             % [micro m]
     LM       = params.geometry.LM;             % [micro m]
     LB       = params.geometry.LB;             % [micro m]
@@ -116,7 +115,7 @@ function output = model_RDQ20_SE(input, params)
         if iT == 1
             x_RU = zeros(n_RU-2,4,4,4); %x_RU(i,a,b,c) = P((X_{i-1},X_i,X_{i+1}) = (a,b,c) )
             x_RU(:,1,1,1) = 1;
-            x_XB = zeros(n_MH,2,2);
+            x_XB = zeros(n_RU,2,2);
         else
             x_RU = x_RU + dt_RU*RU_rhs(x_RU);
             if mod(iT-1,freqXB) == 0
@@ -162,9 +161,9 @@ function output = model_RDQ20_SE(input, params)
         rhs = sum( permute(PhiC,[1,2,5,4,3]) - PhiC + permute(PhiL,[1,5,3,4,2]) - PhiL + permute(PhiR,[1,2,3,5,4]) - PhiR,5);
     end
 
-    function x_RU_new = XB_advance(x_RU, x_XB, dt, SL, dSLdt)
+    function x_XB_new = XB_advance(x_RU, x_XB, dt, SL, dSLdt)
         v = -dSLdt/SL0; % [1/s]
-        x_RU_new = zeros(n_MH,2,2);
+        x_XB_new = zeros(n_RU,2,2);
 
         perm = P_local(x_RU);
         for i = 1:2
@@ -195,7 +194,7 @@ function output = model_RDQ20_SE(input, params)
         diag_P = r + k_PN;
         diag_N = r + k_NP;
 
-        for i = 1:n_MH
+        for i = 1:n_RU
             sol_i = reshape(x_XB(i,:,:),4,1);
             rhs = [perm(i)*mu0_fP_i(i); perm(i)*mu1_fP_i(i); 0; 0];
             A = [-diag_P(i), 0, k_NP(i), 0; ...
@@ -203,7 +202,7 @@ function output = model_RDQ20_SE(input, params)
                  k_PN(i), 0, -diag_N(i), 0; ...
                  0, k_PN(i), -v, -diag_N(i)];
             sol_inf_i = -A\rhs;
-            x_RU_new(i,:,:) = reshape(sol_inf_i + expm(dt*A)*(sol_i - sol_inf_i),[2,2]);
+            x_XB_new(i,:,:) = reshape(sol_inf_i + expm(dt*A)*(sol_i - sol_inf_i),[2,2]);
         end
     end
 

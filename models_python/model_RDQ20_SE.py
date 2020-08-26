@@ -46,7 +46,6 @@ class model_RDQ20_SE:
         self.LB       = float(params['geometry']['LB'])             # [micro m]
         self.SL0      = float(params['geometry']['SL0'])            # [micro m]
         self.n_RU     =   int(params['geometry']['n_RU'])           # [-]
-        self.n_MH     =   int(params['geometry']['n_MH'])           # [-]
         self.Lsmooth  = float(params['geometry']['Lsmooth'])        # [micro m]
         self.Q        = float(params['RU_steady_state']['Q'])       # [-]
         self.Kd0      = float(params['RU_steady_state']['Kd0'])     # [micro M]
@@ -137,7 +136,7 @@ class model_RDQ20_SE:
                 x_RU = np.zeros((self.n_RU-2,4,4,4))
                 # initial state (everything in state 1, i.e. unbounded & non-permissive)
                 x_RU[:,0,0,0] = 1.
-                x_XB = np.zeros((self.n_MH,2,2))
+                x_XB = np.zeros((self.n_RU,2,2))
             else:
                 x_RU = x_RU + self.dt_RU * self.__RU_get_rhs(x_RU)
                 if iT % self.freqXB == 0:
@@ -182,7 +181,7 @@ class model_RDQ20_SE:
 
     def __XB_advance(self, x_RU, x_XB, dt, SL, dSLdt):
         v = -dSLdt / self.SL0 # [1/s]
-        x_RU_new = np.zeros((self.n_MH,2,2))
+        x_XB_new = np.zeros((self.n_RU,2,2))
 
         perm = self.P_local(x_RU)
         for i in range(2):
@@ -211,7 +210,7 @@ class model_RDQ20_SE:
         diag_P = r + k_PN
         diag_N = r + k_NP
 
-        for i in range(self.n_MH):
+        for i in range(self.n_RU):
             sol_i = np.reshape(x_XB[i,:,:], (4,), order='F')
             rhs = np.array((perm[i]*mu0_fP_i[i], perm[i]*mu1_fP_i[i], 0.0, 0.0))
             A = np.array([[-diag_P[i], 0         , k_NP[i]   , 0         ], \
@@ -219,6 +218,6 @@ class model_RDQ20_SE:
                           [k_PN[i]   , 0         , -diag_N[i], 0         ], \
                           [0         , k_PN[i]   , -v        , -diag_N[i]]])
             sol_inf_i = -np.linalg.solve(A, rhs)
-            x_RU_new[i,:,:] = np.reshape(sol_inf_i + np.matmul(expm(dt*A), sol_i - sol_inf_i), (2,2), order='F')
+            x_XB_new[i,:,:] = np.reshape(sol_inf_i + np.matmul(expm(dt*A), sol_i - sol_inf_i), (2,2), order='F')
 
-        return x_RU_new
+        return x_XB_new

@@ -1,9 +1,3 @@
 # Output files
-
 *.pdf
-
-# Python
-
-__pycache__/
-*.py[cod]
-*$py.class
+*.csv

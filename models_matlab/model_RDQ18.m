@@ -117,11 +117,11 @@ function output = model_RDQ18(input, params)
     end
     fprintf('done. Time elapsed: %1.3f s\n', toc(time_init))
 
-    output.times = times;
-    output.Ca    = Ca;
-    output.SL    = SL;
-    output.P     = P;
-    output.Ta    = TaMax * P;
+    output.t  = times';
+    output.Ca = Ca';
+    output.SL = SL';
+    output.P  = P';
+    output.Ta = TaMax * P';
 
     %% Functions definition
     function update_rates(Ca, SL)

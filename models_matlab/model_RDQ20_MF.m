@@ -34,8 +34,8 @@ function output = model_RDQ20_MF(input, params)
 %     http://hdl.handle.net/10589/152617
 % [2] F. Regazzoni, L. Dede', A. Quarteroni "Biophysically detailed
 %     mathematical models of multiscale cardiac active mechanics",
-%     submitted (2020)
-%     https://arxiv.org/abs/2004.07910
+%     PLOS Computational Biology (2020)
+%     https://doi.org/10.1371/journal.pcbi.1008294
 %
 %__________________________________________________________________________
 
@@ -116,11 +116,11 @@ function output = model_RDQ20_MF(input, params)
     end
     fprintf('done. Time elapsed: %1.3f s\n', toc(time_init))
 
-    output.times = times;
-    output.Ca    = Ca;
-    output.SL    = SL;
-    output.P     = P;
-    output.Ta    = Ta;
+    output.t  = times';
+    output.Ca = Ca';
+    output.SL = SL';
+    output.P  = P';
+    output.Ta = Ta';
 
     %% Functions definition
     function update_rates_RU(Ca,SL)

@@ -3,6 +3,10 @@
 % Date:   2020
 
 clear
+%% Chose here the model
+% model_name = 'RDQ18';
+% model_name = 'RDQ20-SE';
+model_name = 'RDQ20-MF';
 
 %% Time interval
 Tmax = .6;   % [s]
@@ -31,9 +35,19 @@ input.Ca = Ca_base(input.times);
 input.SL = SL_base(input.times);
 
 %% Simulation (select here the model)
-% output = model_RDQ18(input);
-% output = model_RDQ20_SE(input);
-output = model_RDQ20_MF(input);
+switch model_name
+    case 'RDQ18'
+        output = model_RDQ18(input);
+    case 'RDQ20-SE'
+        output = model_RDQ20_SE(input);
+    case 'RDQ20-MF'
+        output = model_RDQ20_MF(input);
+    otherwise
+        error('Unknown model ' + model_name)
+end
+
+%% Saving results to csv file
+writetable(struct2table(output), ['output_' model_name '.csv'])
 
 %% Postprocessing
-postprocess(output)
+postprocess(output, ['output_' model_name '.pdf'])

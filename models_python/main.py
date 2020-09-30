@@ -9,6 +9,12 @@ from model_RDQ20_SE import model_RDQ20_SE
 from model_RDQ20_MF import model_RDQ20_MF
 from postprocess import postprocess
 import numpy as np
+import pandas
+
+#%% Choose here the model
+# model = model_RDQ18()
+# model = model_RDQ20_SE()
+model = model_RDQ20_MF()
 
 #%% Time interval
 Tmax = .6   # [s]
@@ -37,12 +43,11 @@ inputs['times'] = np.arange(0,Tmax,1e-4)
 inputs['Ca'] = Ca_base(inputs['times']);
 inputs['SL'] = SL_base(inputs['times']);
 
-#%% Simulation (select here the model)
-# model = model_RDQ18()
-# model = model_RDQ20_SE()
-model = model_RDQ20_MF()
-
+#%% Simulation
 output = model.solve(inputs)
 
+#%% Saving results to csv file
+pandas.DataFrame(output).to_csv('output_' + model.model_name + '.csv', index = False)
+
 #%% Postprocessing
-postprocess(output)
+postprocess(output, 'output_' + model.model_name + '.pdf')

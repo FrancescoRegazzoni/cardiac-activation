@@ -23,8 +23,8 @@ class model_RDQ20_SE:
         http://hdl.handle.net/10589/152617
     [2] F. Regazzoni, L. Dede', A. Quarteroni "Biophysically detailed
         mathematical models of multiscale cardiac active mechanics",
-        submitted (2020)
-        https://arxiv.org/abs/2004.07910
+        PLOS Computational Biology (2020)
+        https://doi.org/10.1371/journal.pcbi.1008294
     """
 
     def __init__(self, params = '../params/params_RDQ20-SE_human_body-temperature.json'):
@@ -36,6 +36,8 @@ class model_RDQ20_SE:
         params : dictionary containing the model parameters, or path of a json
                  file
         """
+
+        self.model_name = 'RDQ20-SE'
 
         if isinstance(params, str):
             with open(params) as json_file:
@@ -148,11 +150,11 @@ class model_RDQ20_SE:
         np.seterr(**old_settings)
 
         output = {}
-        output['times'] = times
-        output['Ca']    = Ca
-        output['SL']    = SL
-        output['P']     = P
-        output['Ta']    = Ta
+        output['t']  = times
+        output['Ca'] = Ca
+        output['SL'] = SL
+        output['P']  = P
+        output['Ta'] = Ta
 
         return output
 

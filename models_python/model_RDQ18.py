@@ -31,6 +31,8 @@ class model_RDQ18:
                  file
         """
 
+        self.model_name = 'RDQ18'
+
         if isinstance(params, str):
             with open(params) as json_file:
                 params = json.load(json_file)
@@ -133,11 +135,11 @@ class model_RDQ18:
         np.seterr(**old_settings)
 
         output = {}
-        output['times'] = times
-        output['Ca']    = Ca
-        output['SL']    = SL
-        output['P']     = P
-        output['Ta']    = self.TaMax * P
+        output['t']  = times
+        output['Ca'] = Ca
+        output['SL'] = SL
+        output['P']  = P
+        output['Ta'] = self.TaMax * P
 
         return output
 
